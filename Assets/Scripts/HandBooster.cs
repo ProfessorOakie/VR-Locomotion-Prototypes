@@ -11,7 +11,7 @@ public class HandBooster : MonoBehaviour {
     private bool boosting = false;
 
     public Rigidbody CameraRigRigidbody;
-    public TextMesh BoostPowerText;    
+    public TextMesh BoostPowerText;
 
     private SteamVR_TrackedObject trackedObj;
     private SteamVR_Controller.Device Controller
@@ -52,6 +52,17 @@ public class HandBooster : MonoBehaviour {
         if (boosting)
         {
             CameraRigRigidbody.AddForce(transform.forward * boosterForce * Time.deltaTime);
+        }
+
+        if (Controller.GetPressDown(SteamVR_Controller.ButtonMask.ApplicationMenu))
+        {
+            transform.parent.position = Vector3.zero;
+            CameraRigRigidbody.velocity = Vector3.zero;
+        }
+
+        if (Controller.GetHairTriggerDown())
+        {
+            CameraRigRigidbody.useGravity = !CameraRigRigidbody.useGravity;
         }
 
     }
